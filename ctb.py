@@ -7,6 +7,13 @@ Original file is located at
     https://colab.research.google.com/drive/1wQv1i5P6TQ3WkSt8e47hjRN2w86G4Ew1
 """
 # First we will import the necessary Library
+pip install tensorflow_io
+pip install matplotlib
+pip install scikit-learn
+pip install tensorflow
+pip install yfinance
+pip install plotly
+pip install streamlit
 
 import os
 import pandas as pd
@@ -14,6 +21,8 @@ import numpy as np
 import math
 import datetime as dt
 import matplotlib.pyplot as plt
+
+pip install tensorflow_io
 
 # For Evalution we will use these library
 
