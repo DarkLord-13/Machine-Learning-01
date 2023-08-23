@@ -13,6 +13,8 @@ import pandas as pd
 import numpy as np
 import math
 import datetime as dt
+import matplotlib
+matplotlib.use('Agg')  # Use the 'Agg' backend
 import matplotlib.pyplot as plt
 
 # For Evalution we will use these library
