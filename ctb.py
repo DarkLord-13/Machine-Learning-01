@@ -15,8 +15,6 @@ import math
 import datetime as dt
 import matplotlib.pyplot as plt
 
-pip install tensorflow_io
-
 # For Evalution we will use these library
 
 from sklearn.metrics import mean_squared_error, mean_absolute_error, explained_variance_score, r2_score
