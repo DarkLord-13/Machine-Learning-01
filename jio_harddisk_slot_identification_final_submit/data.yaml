@@ -1,0 +1,9 @@
+train: D:\DF\ML\ML_Projects(vs_studio)\jio1\data\train\images
+val: D:\DF\ML\ML_Projects(vs_studio)\jio1\data\valid\images
+
+# Classes
+nc: 1 # number of classes
+names: ['']  # class names
+
+
+
