@@ -1,0 +1,60 @@
+def process_excel(input_path, output_path):
+    workbook = openpyxl.load_workbook(input_path)
+    sheet = workbook.active
+    
+    # Processing the feedback data
+    for row in sheet.iter_rows(min_row=2, max_row=8, min_col=1, max_col=1):
+        feedback = row[0].value
+        if isinstance(feedback, str):
+            sentiment, categorization = get_value(feedback)
+            sheet.cell(row=row[0].row, column=2, value=sentiment)
+            sheet.cell(row=row[0].row, column=3, value=categorization)
+        else:
+            sheet.cell(row=row[0].row, column=2, value="input not in string")
+            sheet.cell(row=row[0].row, column=3, value="input not in string")
+
+    # Extracting data for statistical plots
+    sentiments = []
+    categorizations = []
+
+    for row in sheet.iter_rows(min_row=2, max_row=8, min_col=2, max_col=3):
+        sentiment = row[0].value
+        categorization = row[1].value
+        if sentiment != "input not in string":
+            sentiments.append(sentiment)
+            categorizations.append(categorization)
+
+    # Create a new sheet for plots
+    plot_sheet = workbook.create_sheet(title="Plots")
+
+    # Plot: Number of sentiments in each category
+    category_sentiment_counter = Counter(zip(categorizations, sentiments))
+
+    categories = list(set(categorizations))
+    sentiments_types = ["positive", "negative", "neutral"]
+
+    data = {sentiment: [category_sentiment_counter[(category, sentiment)] for category in categories] for sentiment in sentiments_types}
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    for sentiment, count in data.items():
+        ax.bar(categories, count, label=sentiment)
+
+    ax.set_xlabel('Categories')
+    ax.set_ylabel('Number of Sentiments')
+    ax.set_title('Number of Sentiments in Each Category')
+    ax.legend()
+
+    # Save plot to an image file
+    plt.savefig("plot.png")
+
+    # Insert the plot image into the new sheet
+    from openpyxl.drawing.image import Image
+    img = Image("plot.png")
+    plot_sheet.add_image(img, "A1")
+
+    # Save the workbook
+    workbook.save(output_path)
+
+# Example usage
+process_excel("input.xlsx", "output.xlsx")
